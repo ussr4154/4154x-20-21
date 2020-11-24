@@ -20,9 +20,9 @@ void disabled() {}
 void competition_initialize() {}
 
 
-void autonomous() {}
-
-
+void autonomous() {
+  redAuton();
+}
 void opcontrol() {
   while(true){
     //Code for Drivetrain
