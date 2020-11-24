@@ -1,4 +1,5 @@
 #include "main.h"
+#include "autoSelect/selection.h"
 
 void initialize() {
 
@@ -16,11 +17,14 @@ void initialize() {
 
 void disabled() {}
 
-void competition_initialize() {}
+void competition_initialize() {
+  selector::init();
+}
 
 
 void autonomous() {
   redAuton();
+
 }
 void opcontrol() {
   while(true){
