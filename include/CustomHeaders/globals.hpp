@@ -6,8 +6,8 @@ extern pros::Motor backLeft;
 extern pros::Motor backRight;
 extern pros::Motor leftIntake;
 extern pros::Motor rightIntake;
-extern pros::Motor towerIntake;
-
+extern pros::Motor towerIntakeTop;
+extern pros::Motor towerIntakeBottom;
 //Sensors
 //extern pros::Imu inertial;
 

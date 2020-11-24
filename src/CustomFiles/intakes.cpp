@@ -9,7 +9,8 @@ void setIntakeBottom(int power){
 void setIntakeALL(int power){
   leftIntake = power;
   rightIntake = power;
-  towerIntake = power;
+  towerIntakeTop = power;
+  towerIntakeBottom = power;
 }
 
 //Driver Control
