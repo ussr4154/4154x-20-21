@@ -2,8 +2,8 @@
 using namespace okapi;
 
 //Chassis Odometry & Motion Profiling Builders
-void buildChassisOdom();
-void buildChassisMotion();
+void buildChassis();
+
 
 //Odometry Functions
 
