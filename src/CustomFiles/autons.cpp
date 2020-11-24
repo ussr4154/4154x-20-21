@@ -6,6 +6,10 @@ void buildChassisOdom(){
 
 }
 
+void buildChassisMotion(){
+
+}
+
 //Autonomous Programs
 void redAuton(){
 

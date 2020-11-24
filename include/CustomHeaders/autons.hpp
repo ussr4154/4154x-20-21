@@ -6,7 +6,6 @@ void buildChassisOdom();
 void buildChassisMotion();
 
 //Odometry Functions
-void movePath();
 
 //Autonomous Programs
 void redAuton();
