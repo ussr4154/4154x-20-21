@@ -1,7 +1,7 @@
 #include "main.h"
 
 void initialize() {
-  
+
   //Brakes
   frontLeft.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   frontRight.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
@@ -15,7 +15,6 @@ void initialize() {
 }
 
 void disabled() {}
-
 
 void competition_initialize() {}
 
