@@ -1,4 +1,5 @@
 #include "main.h"
+#include "autoSelect/selection.h"
 using namespace okapi;
 
 //Chassis Odometry & Motion Profiling Builders
@@ -35,10 +36,15 @@ using namespace okapi;
 
 //Autonomous Programs
 void redAuton(){
+
 }
 void blueAuton(){
 
 }
 void skillsAuton(){
 
+}
+
+void nothingToSeeHere(){
+  
 }

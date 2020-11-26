@@ -23,8 +23,27 @@ void competition_initialize() {
 
 
 void autonomous() {
-  redAuton();
+  
+  //Un-Note for competiton ONLY
+  /**
+  int redLeft = 1
+  int redRight = 2
+  int redNothing = 3
+  int blueLeft = -1
+  int blueRight = -2
+  int blueNothing = -3
+  int skills = 0
 
+  if(selector::auton == redLeft || selector::auton == redRight)
+    redAuton();
+  if(selector::auton == blueLeft || selector::auton == blueRight)
+    blueAuton();
+  if(selector::auton == blueNothing || selector::auton == redNothing)
+    nothingToSeeHere();
+  if(selector::auton == skills)
+    skillsAuton();
+  **/
+  
 }
 void opcontrol() {
   while(true){
