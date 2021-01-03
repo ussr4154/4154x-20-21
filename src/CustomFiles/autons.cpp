@@ -18,7 +18,7 @@ using namespace okapi;
         )
         // green gearset, tracking wheel diameter (2.75 in), track (7 in), and TPR (360)
         // 1 inch middle encoder distance, and 2.75 inch middle wheel diameter
-        .withDimensions(AbstractMotor::gearset::green, {{2.75_in, 7_in, 1_in, 2.75_in}, quadEncoderTPR})
+        .withDimensions(AbstractMotor::gearset::blue, {{2.75_in, 7_in, 1_in, 2.75_in}, quadEncoderTPR})
         .withOdometry() // use the same scales as the chassis (above)
         .buildOdometry(); // Builds the odom chassis
 
@@ -46,5 +46,5 @@ void skillsAuton(){
 }
 
 void nothingToSeeHere(){
-  
+
 }

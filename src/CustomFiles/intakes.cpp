@@ -1,9 +1,9 @@
 #include "main.h"
 
 //Helpers
-void setIntakeBottom(int power){
-  leftIntake = power;
-  rightIntake = power;
+void setIntakeCentral(int power){
+  towerIntakeTop = power;
+  towerIntakeBottom = power;
 }
 
 void setIntakeALL(int power){
@@ -14,11 +14,11 @@ void setIntakeALL(int power){
 }
 
 //Driver Control
-void setIntakeMotorsBottom(){
+void setIntakeMotorsCentral(){
   if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-      setIntakeBottom(127);
+      setIntakeCentral(127);
 } else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-      setIntakeBottom(-127);
+      setIntakeCentral(-127);
 }
 }
 

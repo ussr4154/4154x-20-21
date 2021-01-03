@@ -23,36 +23,35 @@ void competition_initialize() {
 
 
 void autonomous() {
-  
+
   //Un-Note for competiton ONLY
   /**
-  int redLeft = 1
-  int redRight = 2
+  int redHomeRow = 1
+  int redMiddleTower = 2
   int redNothing = 3
-  int blueLeft = -1
-  int blueRight = -2
+  int blueHomeRow = -1
+  int blueMiddleTower = -2
   int blueNothing = -3
   int skills = 0
 
-  if(selector::auton == redLeft || selector::auton == redRight)
+  if(selector::auton == redHomeRow || selector::auton == redMiddleTower)
     redAuton();
-  if(selector::auton == blueLeft || selector::auton == blueRight)
+  if(selector::auton == blueHomeRow || selector::auton == blueMiddleTower)
     blueAuton();
   if(selector::auton == blueNothing || selector::auton == redNothing)
     nothingToSeeHere();
   if(selector::auton == skills)
     skillsAuton();
   **/
-  
+
 }
 void opcontrol() {
   while(true){
     //Code for Drivetrain
     setDriveMotors();
-    setIntakeMotorsALL();
-    setIntakeMotorsBottom();
     //Code for Intakes;
-
+    setIntakeMotorsALL();
+    setIntakeMotorsCentral();
 
     pros::delay(10);
   }
