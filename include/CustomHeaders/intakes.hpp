@@ -4,7 +4,8 @@ void setIntakeCentral(int power);
 
 void setIntakeALL(int power);
 
-//Driver Control
-void setIntakeMotorsCentral();
+void setIntakeEjector(int power);
 
-void setIntakeMotorsALL();
+//Driver Controls
+
+void setIntakeMotors();

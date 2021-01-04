@@ -11,7 +11,14 @@ pros::Motor towerIntakeTop(7, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENC
 pros::Motor towerIntakeBottom(8, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_COUNTS);
 
 //Sensors
-//pros::Imu inertial(#);
+/*
+pros::ADIEncoder leftTracker('A','B', true); //Reversed
+pros::ADIEncoder rightTracker('E','F');
+pros::ADIEncoder middleTracker('C','D');
+pros::ADIAnalogIn topBallSensor('G');
+pros::ADIAnalogIn middleBallSensor('H');
+pros::ADIDigitalIn bottomBallSwitch('H');
+*/
 
 //Controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);

@@ -7,3 +7,7 @@
 void redAuton();
 void blueAuton();
 void skillsAuton();
+void nothingToSeeHere();
+
+//Macros
+void deploy();

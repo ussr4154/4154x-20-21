@@ -1,5 +1,12 @@
 #include "main.h"
 #include "autoSelect/selection.h"
+#define redHomeRow 1
+#define redMiddleTower 2
+#define redNothing 3
+#define blueHomeRow -1
+#define blueMiddleTower -2
+#define blueNothing 3
+#define skills 0
 
 void initialize() {
 
@@ -24,16 +31,7 @@ void competition_initialize() {
 
 void autonomous() {
 
-  //Un-Note for competiton ONLY
-  /**
-  int redHomeRow = 1
-  int redMiddleTower = 2
-  int redNothing = 3
-  int blueHomeRow = -1
-  int blueMiddleTower = -2
-  int blueNothing = -3
-  int skills = 0
-
+  //Selector
   if(selector::auton == redHomeRow || selector::auton == redMiddleTower)
     redAuton();
   if(selector::auton == blueHomeRow || selector::auton == blueMiddleTower)
@@ -42,17 +40,18 @@ void autonomous() {
     nothingToSeeHere();
   if(selector::auton == skills)
     skillsAuton();
-  **/
+
+  //Default Autonomous (Selector Fail)
+    skillsAuton();
 
 }
 void opcontrol() {
+  deploy();
   while(true){
     //Code for Drivetrain
     setDriveMotors();
     //Code for Intakes;
-    setIntakeMotorsALL();
-    setIntakeMotorsCentral();
-
+    setIntakeMotors();
     pros::delay(10);
   }
 }
