@@ -48,3 +48,15 @@ void skillsAuton(){
 void nothingToSeeHere(){
 
 }
+
+//Macros | Automatic Functions
+
+void deploy(){
+
+  towerIntakeTop = -127;
+  towerIntakeBottom = -127;
+  pros::delay(500);
+  towerIntakeTop = -0;
+  towerIntakeBottom = -0;
+
+}

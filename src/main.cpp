@@ -46,7 +46,7 @@ void autonomous() {
 
 }
 void opcontrol() {
-  deploy();
+    deploy();
   while(true){
     //Code for Drivetrain
     setDriveMotors();
