@@ -27,7 +27,7 @@ using namespace okapi;
       .withLimits({
           1.0, // Maximum linear velocity of the Chassis in m/s
           2.0, // Maximum linear acceleration of the Chassis in m/s/s
-          5.0 // Maximum linear jerk of the Chassis in m/s/s/s
+          7.0 // Maximum linear jerk of the Chassis in m/s/s/s
           })
       .withOutput(chassis)
       .buildMotionProfileController();
@@ -53,10 +53,10 @@ void nothingToSeeHere(){
 
 void deploy(){
 
-  towerIntakeTop = -127;
-  towerIntakeBottom = -127;
+  towerIntakeTop.move(127);
+  towerIntakeBottom.move(127);
   pros::delay(500);
-  towerIntakeTop = -0;
-  towerIntakeBottom = -0;
+  towerIntakeTop.move(0);
+  towerIntakeBottom.move(0);
 
 }
