@@ -5,7 +5,7 @@ using namespace okapi;
 //Chassis Odometry & Motion Profiling Builders
   std::shared_ptr<OdomChassisController> chassis =
     ChassisControllerBuilder()
-      .withMotors({1,3},{2,4}) // Left = 1,3 | Right = 2,4
+      .withMotors({5,4},{7,6}) // Left = 5,4 | Right = 7,6
       .withGains(
           {0.001, 0, 0.0001}, // distance controller gains
           {0.001, 0, 0.0001}, // turn controller gains

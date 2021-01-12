@@ -22,7 +22,9 @@ void initialize() {
 
 }
 
-void disabled() {}
+void disabled(){
+
+}
 
 void competition_initialize() {
   selector::init();
@@ -30,8 +32,8 @@ void competition_initialize() {
 
 
 void autonomous() {
-
-  //Selector
+  deploy();
+  //Selector | If no program is chosen, defaults to skills
   if(selector::auton == redHomeRow || selector::auton == redMiddleTower)
     redAuton();
   if(selector::auton == blueHomeRow || selector::auton == blueMiddleTower)
@@ -41,12 +43,8 @@ void autonomous() {
   if(selector::auton == skills)
     skillsAuton();
 
-  //Default Autonomous (Selector Fail)
-    skillsAuton();
-
 }
 void opcontrol() {
-    deploy();
   while(true){
     //Code for Drivetrain
     setDriveMotors();
