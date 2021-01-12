@@ -5,7 +5,7 @@ using namespace okapi;
 //Chassis Odometry & Motion Profiling Builders
   std::shared_ptr<OdomChassisController> chassis =
     ChassisControllerBuilder()
-      .withMotors({1,3},{2,4}) // Left = 1,3 | Right = 2,4
+      .withMotors({5,4},{7,6}) // Left = 5,4 | Right = 7,6
       .withGains(
           {0.001, 0, 0.0001}, // distance controller gains
           {0.001, 0, 0.0001}, // turn controller gains
@@ -18,7 +18,7 @@ using namespace okapi;
         )
         // green gearset, tracking wheel diameter (2.75 in), track (7 in), and TPR (360)
         // 1 inch middle encoder distance, and 2.75 inch middle wheel diameter
-        .withDimensions(AbstractMotor::gearset::green, {{2.75_in, 7_in, 1_in, 2.75_in}, quadEncoderTPR})
+        .withDimensions(AbstractMotor::gearset::blue, {{2.75_in, 7_in, 1_in, 2.75_in}, quadEncoderTPR})
         .withOdometry() // use the same scales as the chassis (above)
         .buildOdometry(); // Builds the odom chassis
 
@@ -27,7 +27,7 @@ using namespace okapi;
       .withLimits({
           1.0, // Maximum linear velocity of the Chassis in m/s
           2.0, // Maximum linear acceleration of the Chassis in m/s/s
-          5.0 // Maximum linear jerk of the Chassis in m/s/s/s
+          7.0 // Maximum linear jerk of the Chassis in m/s/s/s
           })
       .withOutput(chassis)
       .buildMotionProfileController();
@@ -46,5 +46,17 @@ void skillsAuton(){
 }
 
 void nothingToSeeHere(){
-  
+
+}
+
+//Macros | Automatic Functions
+
+void deploy(){
+
+  towerIntakeTop.move(127);
+  towerIntakeBottom.move(127);
+  pros::delay(500);
+  towerIntakeTop.move(0);
+  towerIntakeBottom.move(0);
+
 }

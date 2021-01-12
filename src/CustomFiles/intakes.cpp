@@ -1,9 +1,9 @@
 #include "main.h"
 
 //Helpers
-void setIntakeBottom(int power){
-  leftIntake = power;
-  rightIntake = power;
+void setIntakeCentral(int power){
+  towerIntakeTop = power;
+  towerIntakeBottom = power;
 }
 
 void setIntakeALL(int power){
@@ -13,19 +13,28 @@ void setIntakeALL(int power){
   towerIntakeBottom = power;
 }
 
-//Driver Control
-void setIntakeMotorsBottom(){
-  if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-      setIntakeBottom(127);
-} else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-      setIntakeBottom(-127);
-}
+void setIntakeEjector(int power){
+
+  leftIntake = power;
+  rightIntake = power;
+  towerIntakeBottom = power;
+  towerIntakeTop = - power;
 }
 
-void setIntakeMotorsALL(){
-  if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+//Driver Control
+void setIntakeMotors(){
+  /*if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+      setIntakeCentral(127);
+}*/ if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+      setIntakeEjector(127);
+}
+  else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       setIntakeALL(127);
-} else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+}
+  else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       setIntakeALL(-127);
 }
+  else {
+    setIntakeALL(0);
+  }
 }

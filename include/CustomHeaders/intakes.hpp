@@ -1,10 +1,11 @@
 #include "main.h"
 //Helpers
-void setIntakeBottom(int power);
+void setIntakeCentral(int power);
 
 void setIntakeALL(int power);
 
-//Driver Control
-void setIntakeMotorsBottom();
+void setIntakeEjector(int power);
 
-void setIntakeMotorsALL();
+//Driver Controls
+
+void setIntakeMotors();
