@@ -7,18 +7,18 @@ using namespace okapi;
     ChassisControllerBuilder()
       .withMotors({5,4},{7,6}) // Left = 5,4 | Right = 7,6
       .withGains(
-          {0.001, 0, 0.0001}, // distance controller gains
-          {0.001, 0, 0.0001}, // turn controller gains
-          {0.001, 0, 0.0001}  // angle controller gains (helps drive straight)
+          {0.001, 0.001, 0.00001}, // distance controller gains
+          {0.001, 0.001, 0.00001}, // turn controller gains
+          {0, 0, 0}  // angle controller gains (helps drive straight)
         )
         .withSensors(
-          ADIEncoder{'A', 'B', true}, //Left Encoder = A,B (Reverse)
-          ADIEncoder{'C', 'D'},  // Right Encoder = C,D
-          ADIEncoder{'E', 'F'}  // Middle Encoder = E,F
+          ADIEncoder{'G', 'H'}, //Left Encoder = A,B (Reverse)
+          ADIEncoder{'E', 'F',true},  // Right Encoder = C,D
+          ADIEncoder{'C', 'D', true}  // Middle Encoder = E,F
         )
         // green gearset, tracking wheel diameter (2.75 in), track (7 in), and TPR (360)
         // 1 inch middle encoder distance, and 2.75 inch middle wheel diameter
-        .withDimensions(AbstractMotor::gearset::blue, {{2.75_in, 7_in, 1_in, 2.75_in}, quadEncoderTPR})
+        .withDimensions(AbstractMotor::gearset::blue, {{2.75_in, 6.5_in, 6_in, 2.75_in}, quadEncoderTPR})
         .withOdometry() // use the same scales as the chassis (above)
         .buildOdometry(); // Builds the odom chassis
 
@@ -43,6 +43,9 @@ void blueAuton(){
 }
 void skillsAuton(){
 
+  chassis->setState({0_in, 0_in, 0_deg});
+
+  chassis->driveToPoint({1_ft,1_ft});
 }
 
 void nothingToSeeHere(){

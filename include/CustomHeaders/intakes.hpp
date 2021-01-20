@@ -1,6 +1,6 @@
 #include "main.h"
 //Helpers
-void setIntakeCentral(int power);
+void setIntakeFront(int power);
 
 void setIntakeALL(int power);
 
