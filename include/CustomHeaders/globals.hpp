@@ -8,8 +8,9 @@ extern pros::Motor leftIntake;
 extern pros::Motor rightIntake;
 extern pros::Motor towerIntakeTop;
 extern pros::Motor towerIntakeBottom;
+
 //Sensors
-//extern pros::Imu inertial;
+extern pros::ADIAnalogIn topBallSensor;
 
 //Controller
 extern pros::Controller controller;

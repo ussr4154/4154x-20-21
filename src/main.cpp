@@ -46,6 +46,7 @@ void autonomous() {
 }
 void opcontrol() {
   while(true){
+    ballPresent();
     //Code for Drivetrain
     setDriveMotors();
     //Code for Intakes;
