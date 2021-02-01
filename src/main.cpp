@@ -1,10 +1,10 @@
 #include "main.h"
 #include "autoSelect/selection.h"
 #define redHomeRow 1
-#define redMiddleTower 2
+#define redTwoPoint 2
 #define redNothing 3
 #define blueHomeRow -1
-#define blueMiddleTower -2
+#define blueTwoPoint -2
 #define blueNothing 3
 #define skills 0
 
@@ -32,16 +32,25 @@ void competition_initialize() {
 
 
 void autonomous() {
-  deploy();
   //Selector | If no program is chosen, defaults to skills
-  if(selector::auton == redHomeRow || selector::auton == redMiddleTower)
-    redAuton();
-  if(selector::auton == blueHomeRow || selector::auton == blueMiddleTower)
-    blueAuton();
-  if(selector::auton == blueNothing || selector::auton == redNothing)
+  if(selector::auton == redHomeRow)
+    homeRowAuton();
+  if(selector::auton == blueHomeRow)
+    homeRowAuton();
+  if(selector::auton == redTwoPoint)
+    twoPointAuton();
+  if (selector::auton == blueTwoPoint)
+    twoPointAuton();
+  if(selector::auton == blueNothing)
+    nothingToSeeHere();
+  if(selector::auton == redNothing)
     nothingToSeeHere();
   if(selector::auton == skills)
     skillsAuton();
+
+  else{
+    skillsAuton();
+  }
 
 }
 void opcontrol() {

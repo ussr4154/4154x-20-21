@@ -4,8 +4,8 @@
 
 
 //Autonomous Programs
-void redAuton();
-void blueAuton();
+void homeRowAuton();
+void twoPointAuton();
 void skillsAuton();
 void nothingToSeeHere();
 

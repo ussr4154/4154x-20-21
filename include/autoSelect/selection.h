@@ -4,8 +4,8 @@
 
 //selector configuration
 #define HUE 180
-#define DEFAULT 0
-#define AUTONS "Home Row", "Middle Tower", "Nothing"
+#define DEFAULT 1
+#define AUTONS "Home Row", "Two Point", "Nothing"
 
 namespace selector{
 
