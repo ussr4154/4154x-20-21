@@ -8,7 +8,7 @@ void deploy(){
 
   towerIntakeTop.move(-127);
   towerIntakeBottom.move(-127);
-  pros::delay(300);
+  pros::delay(500);
   towerIntakeTop.move(0);
   towerIntakeBottom.move(0);
 
@@ -27,9 +27,23 @@ void allIntakesOff(){
   towerIntakeBottom.move(0);
 }
 
+void allIntakesOn(){
+  leftIntake.move(127);
+  rightIntake.move(127);
+  towerIntakeTop.move(127);
+  towerIntakeBottom.move(127);
+}
+
 void frontIntakesSpit(){
   leftIntake.move(-127);
   rightIntake.move(-127);
+  towerIntakeBottom.move(-127);
+}
+
+void allIntakesSpit(){
+  leftIntake.move(-127);
+  rightIntake.move(-127);
+  towerIntakeTop.move(-127);
   towerIntakeBottom.move(-127);
 }
 
@@ -45,7 +59,33 @@ void score(){
   rightIntake.move(0);
 }
 
+void scoreTwo(){
+  towerIntakeTop.move(127);
+  towerIntakeBottom.move(127);;
+  leftIntake.move(127);
+  rightIntake.move(127);
+  pros::delay(1500);
+  towerIntakeTop.move(0);
+  towerIntakeBottom.move(0);
+  leftIntake.move(0);
+  rightIntake.move(0);
+}
 
+void scoreNoDescore(int time){
+  towerIntakeTop.move(127);
+  towerIntakeBottom.move(127);;
+  leftIntake.move(-127);
+  rightIntake.move(-127);
+  pros::delay(time);
+  towerIntakeTop.move(0);
+  towerIntakeBottom.move(0);
+  leftIntake.move(0);
+  rightIntake.move(0);
+}
+
+void turnRight(){}
+
+void turnLeft(){}
 //Chassis Odometry & Motion Profiling Builders
   std::shared_ptr<OdomChassisController> chassis =
     ChassisControllerBuilder()
@@ -78,43 +118,37 @@ void score(){
 //Autonomous Programs
 void twoPointAuton(){
 
-    deploy();
+  deploy();
 
-    chassis->setState({0_ft,0_ft});
+  chassis->setState({0_ft,0_ft});
 
-    frontLeft.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    frontRight.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    backLeft.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    backRight.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  frontLeft.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  frontRight.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  backLeft.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  backRight.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 
-    chassis->setMaxVelocity(600);
+  chassis->setMaxVelocity(600);
 
-    profileController->generatePath(
-      {{0_ft, 0_ft, 0_deg}, {4.5_ft, 0_ft, 0_deg}}, "goal2Mid");
-    profileController->setTarget("goal2Mid");
-    profileController->waitUntilSettled();
+  profileController->generatePath(
+    {{0_ft, 0_ft, 0_deg}, {4.5_ft, 0_ft, 0_deg}}, "goal2Mid");
+  profileController->setTarget("goal2Mid");
+  profileController->waitUntilSettled();
 
-    chassis->turnAngle(-175_deg);
+  chassis->turnAngle(-170_deg);
 
-    frontIntakesOn();
+  frontIntakesOn();
 
-    profileController->generatePath(
-      {{0_ft, 0_ft, 0_deg}, {3.25_ft, 0_ft, 0_deg}}, "goal2Score");
-    profileController->setTarget("goal2Score");
-    profileController->waitUntilSettled();
+  profileController->generatePath(
+    {{0_ft, 0_ft, 0_deg}, {3.45_ft, 0_ft, 0_deg}}, "goal2Score");
+  profileController->setTarget("goal2Score");
+  profileController->waitUntilSettled();
 
-    score();
+  score();
 
-    profileController->generatePath(
-      {{0_ft, 0_ft, 0_deg}, {3.5_ft, 0_ft, 0_deg}}, "goal2Backup");
-    profileController->setTarget("goal2Backup",true);
-    profileController->waitUntilSettled();
-
-    frontIntakesSpit();
-
-    pros::delay(500);
-
-    allIntakesOff();
+  profileController->generatePath(
+    {{0_ft, 0_ft, 0_deg}, {7.35_ft, 0_ft, 0_deg}}, "goal2Backup");
+  profileController->setTarget("goal2Backup",true);
+  profileController->waitUntilSettled();
 
 }
 
@@ -136,43 +170,38 @@ void homeRowAuton(){
   profileController->setTarget("goal2Mid");
   profileController->waitUntilSettled();
 
-  chassis->turnAngle(-175_deg);
+  chassis->turnAngle(-170_deg);
 
   frontIntakesOn();
 
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {3.25_ft, 0_ft, 0_deg}}, "goal2Score");
+    {{0_ft, 0_ft, 0_deg}, {3.45_ft, 0_ft, 0_deg}}, "goal2Score");
   profileController->setTarget("goal2Score");
   profileController->waitUntilSettled();
 
   score();
 
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {3.5_ft, 0_ft, 0_deg}}, "goal2Backup");
+    {{0_ft, 0_ft, 0_deg}, {7.35_ft, 0_ft, 0_deg}}, "goal2Backup");
   profileController->setTarget("goal2Backup",true);
   profileController->waitUntilSettled();
 
-  frontIntakesSpit();
+  allIntakesOn();
 
   pros::delay(500);
 
-  chassis->turnAngle(-283_deg);
+  chassis->turnAngle(-204_deg);
 
-  profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {11.5_ft, 0_ft, 0_deg}}, "crossHomeZone");
-  profileController->setTarget("crossHomeZone");
-  profileController->waitUntilSettled();
-
-  chassis->turnAngle(115_deg);
+  allIntakesOff();
 
   frontIntakesOn();
 
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {3.75_ft, 0_ft, 0_deg}}, "goal3Score");
-  profileController->setTarget("goal3Score");
+    {{0_ft, 0_ft, 0_deg}, {13.65_ft, 0_ft, 0_deg}}, "crossHomeZone");
+  profileController->setTarget("crossHomeZone");
   profileController->waitUntilSettled();
 
-  score();
+  scoreTwo();
 
   profileController->generatePath(
     {{0_ft, 0_ft, 0_deg}, {3.5_ft, 0_ft, 0_deg}}, "goal3Backup");
@@ -183,32 +212,107 @@ void homeRowAuton(){
 
 void skillsAuton(){
 
+  deploy();
+
   chassis->setMaxVelocity(600);
 
   frontIntakesOn();
 
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {8.5_ft, 0_ft, 0_deg}}, "firstGoalGrab");
+    {{0_ft, 0_ft, 0_deg}, {8.3_ft, 0_ft, 0_deg}}, "firstGoalGrab");
   profileController->setTarget("firstGoalGrab");
   profileController->waitUntilSettled();
 
   allIntakesOff();
 
-  chassis->turnAngle(276_deg);
+  chassis->turnAngle(275_deg);
 
   profileController->generatePath(
     {{0_ft, 0_ft, 0_deg}, {3.95_ft, 0_ft, 0_deg}}, "firstGoalScore");
   profileController->setTarget("firstGoalScore");
   profileController->waitUntilSettled();
 
-  score();
+  scoreNoDescore(2000);
 
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {1_ft, 0_ft, 0_deg}}, "firstGoalBackup");
+    {{0_ft, 0_ft, 0_deg}, {0.8_ft, 0_ft, 0_deg}}, "firstGoalBackup");
   profileController->setTarget("firstGoalBackup",true);
   profileController->waitUntilSettled();
 
-  chassis->turnAngle(-195_deg);
+  allIntakesOn();
+
+  pros::delay(300);
+
+  chassis->turnAngle(-180_deg);
+
+  allIntakesOff();
+
+  frontIntakesOn();
+
+  profileController->generatePath(
+    {{0_ft, 0_ft, 0_deg}, {6.4_ft, 0_ft, 0_deg}}, "secondGoalDrive");
+  profileController->setTarget("secondGoalDrive");
+  profileController->waitUntilSettled();
+
+  allIntakesOff();
+
+  chassis->turnAngle(120_deg);
+
+  profileController->generatePath(
+    {{0_ft, 0_ft, 0_deg}, {2_ft, 0_ft, 0_deg}}, "secondGoalScore");
+  profileController->setTarget("secondGoalScore");
+  profileController->waitUntilSettled();
+
+  scoreNoDescore(1000);
+
+  profileController->generatePath(
+    {{0_ft, 0_ft, 0_deg}, {2.6_ft, 0_ft, 0_deg}}, "secondGoalBack");
+  profileController->setTarget("secondGoalBack",true);
+  profileController->waitUntilSettled();
+
+  chassis->turnAngle(-110_deg);
+
+  profileController->generatePath(
+    {{0_ft, 0_ft, 0_deg}, {2.9_ft, 0_ft, 0_deg}}, "thirdGoalCross");
+  profileController->setTarget("thirdGoalCross",true);
+  profileController->waitUntilSettled();
+
+  chassis->turnAngle(-180_deg);
+
+  frontIntakesOn();
+
+  profileController->generatePath(
+    {{0_ft, 0_ft, 0_deg}, {3.8_ft, 0_ft, 0_deg}}, "thirdGoalAlign");
+  profileController->setTarget("thirdGoalAlign",true);
+  profileController->waitUntilSettled();
+
+  profileController->generatePath(
+    {{0_ft, 0_ft, 0_deg}, {9_ft, 0_ft, 0_deg}}, "thirdGoalGrab");
+  profileController->setTarget("thirdGoalGrab");
+  profileController->waitUntilSettled();
+
+  chassis->setMaxVelocity(400);
+
+  chassis->turnAngle(180_deg);
+
+  chassis->turnAngle(70_deg);
+
+  chassis->setMaxVelocity(600);
+
+  profileController->generatePath(
+    {{0_ft, 0_ft, 0_deg}, {5_ft, 0_ft, 0_deg}}, "thirdGoalScore");
+  profileController->setTarget("thirdGoalScore");
+  profileController->waitUntilSettled();
+
+  scoreNoDescore(2000);
+
+  profileController->generatePath(
+    {{0_ft, 0_ft, 0_deg}, {2_ft, 0_ft, 0_deg}}, "thirdGoalBack");
+  profileController->setTarget("thirdGoalBack",true);
+  profileController->waitUntilSettled();
+
+
+
 
 }
 

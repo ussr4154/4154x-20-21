@@ -32,27 +32,24 @@ void competition_initialize() {
 
 
 void autonomous() {
-  //Selector | If no program is chosen, defaults to skills
-  if(selector::auton == redHomeRow)
+  /*Selector | If no program is chosen, defaults to skills
+  if(selector::auton == 1)
     homeRowAuton();
-  if(selector::auton == blueHomeRow)
+  if(selector::auton == -1)
     homeRowAuton();
-  if(selector::auton == redTwoPoint)
+  if(selector::auton == 2)
     twoPointAuton();
-  if (selector::auton == blueTwoPoint)
+  if (selector::auton == -2)
     twoPointAuton();
-  if(selector::auton == blueNothing)
+  if(selector::auton == -3)
     nothingToSeeHere();
-  if(selector::auton == redNothing)
+  if(selector::auton == 3)
     nothingToSeeHere();
-  if(selector::auton == skills)
+  if(selector::auton == 0)
+    skillsAuton();*/
     skillsAuton();
-
-  else{
-    skillsAuton();
-  }
-
 }
+
 void opcontrol() {
   while(true){
     ballPresent();

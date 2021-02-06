@@ -27,7 +27,7 @@ void setIntakeEjector(int power){
 
 void setIntakeIndex(int power){
 
-  if(ballPresent() == true){
+  if(ballPresent()){
     towerIntakeTop = 0;
     towerIntakeBottom = 0;
     leftIntake = power;
