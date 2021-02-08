@@ -190,7 +190,7 @@ void homeRowAuton(){
 
   pros::delay(500);
 
-  chassis->turnAngle(-204_deg);
+  chassis->turnAngle(-214_deg);
 
   allIntakesOff();
 

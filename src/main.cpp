@@ -32,7 +32,7 @@ void competition_initialize() {
 
 
 void autonomous() {
-  /*Selector | If no program is chosen, defaults to skills
+  //Selector | If no program is chosen, defaults to skills
   if(selector::auton == 1)
     homeRowAuton();
   if(selector::auton == -1)
@@ -46,7 +46,6 @@ void autonomous() {
   if(selector::auton == 3)
     nothingToSeeHere();
   if(selector::auton == 0)
-    skillsAuton();*/
     skillsAuton();
 }
 
