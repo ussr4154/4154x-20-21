@@ -11,6 +11,7 @@ extern pros::Motor towerIntakeBottom;
 
 //Sensors
 extern pros::ADIAnalogIn topBallSensor;
+extern pros::Imu inertial;
 
 //Controller
 extern pros::Controller controller;

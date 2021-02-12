@@ -20,6 +20,11 @@ void frontIntakesOn(){
   towerIntakeBottom = 127;
 }
 
+void sideIntakesOn(){
+  leftIntake = 127;
+  rightIntake = 127;
+}
+
 void allIntakesOff(){
   leftIntake.move(0);
   rightIntake.move(0);
@@ -83,9 +88,59 @@ void scoreNoDescore(int time){
   rightIntake.move(0);
 }
 
-void turnRight(){}
+void turnRight(int degree){
 
-void turnLeft(){}
+  float kP = 0.001;
+  float kD = 0.000;
+  int startHeading = inertial.get_heading();
+  float prevError = 0;
+
+  while(inertial.get_heading() < startHeading + degree){
+    double currentHeading = inertial.get_heading();
+    float error = (startHeading + degree) - currentHeading;
+    float integral = integral + error;
+    float derivative = error - prevError;
+    prevError = error;
+
+    if(error == 0)
+      integral = 0;
+
+    int power = error*kP + derivative*kD;
+
+    frontLeft = power;
+    frontRight = -power;
+    backLeft = power;
+    backRight = -power;
+
+    pros::delay(10);
+  }
+}
+
+void turnLeft(int degree){
+
+  float kP = 0.000;
+  float kI = 0.000;
+  float kD = 0.000;
+  int startHeading = inertial.get_heading();
+  float prevError = 0;
+
+  while(inertial.get_heading() > startHeading - degree){
+    double currentHeading = inertial.get_heading();
+    float error = (startHeading - degree) - currentHeading;
+    float derivative = prevError - error;
+    prevError = error;
+
+    int power = error*kP + derivative*kD;
+
+    frontLeft = -power;
+    frontRight = power;
+    backLeft = -power;
+    backRight = power;
+
+    pros::delay(10);
+  }
+}
+
 //Chassis Odometry & Motion Profiling Builders
   std::shared_ptr<OdomChassisController> chassis =
     ChassisControllerBuilder()
@@ -95,7 +150,7 @@ void turnLeft(){}
           ADIEncoder{'G', 'H'}, //Left Encoder = A,B (Reverse)
           ADIEncoder{'E', 'F',true} // Right Encoder = C,D // Middle Encoder = E,F
         )*/
-        // green gearset, tracking wheel diameter (2.75 in), track (7 in), and TPR (360)
+        // blue gearset, tracking wheel diameter (2.75 in), track (7 in), and TPR (360)
         // 1 inch middle encoder distance, and 2.75 inch middle wheel diameter
         .withDimensions(AbstractMotor::gearset::blue, {{2.75_in, 6.5_in, 6_in, 2.75_in}, quadEncoderTPR})
         .withOdometry() // use the same scales as the chassis (above)
@@ -212,7 +267,7 @@ void homeRowAuton(){
 
 void skillsAuton(){
 
-  deploy();
+/*  deploy();
 
   chassis->setMaxVelocity(600);
 
@@ -286,34 +341,85 @@ void skillsAuton(){
   profileController->setTarget("thirdGoalAlign",true);
   profileController->waitUntilSettled();
 
+  pros::delay(3000);
+
+  frontIntakesOn();
+
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {9_ft, 0_ft, 0_deg}}, "thirdGoalGrab");
+    {{0_ft, 0_ft, 0_deg}, {8.4_ft, 0_ft, 0_deg}}, "thirdGoalGrab");
   profileController->setTarget("thirdGoalGrab");
   profileController->waitUntilSettled();
 
   chassis->setMaxVelocity(400);
 
-  chassis->turnAngle(180_deg);
+  chassis->turnAngle(190_deg);
 
-  chassis->turnAngle(70_deg);
+  //chassis->turnAngle(90_deg);
+
+  chassis->setMaxVelocity(600);
+
+  allIntakesOff();
+
+  sideIntakesOn();
+
+  profileController->generatePath(
+    {{0_ft, 0_ft, 0_deg}, {4.4_ft, 0_ft, 0_deg}}, "thirdGoalScore");
+  profileController->setTarget("thirdGoalScore");
+
+  pros::delay(700);
+
+  frontIntakesOn();
+
+  pros::delay(500);
+
+  allIntakesOff();
+
+  profileController->waitUntilSettled();
+
+
+  scoreNoDescore(2000);
+
+  allIntakesSpit();
+
+  pros::delay(300);
+
+  scoreNoDescore(600);
+
+  profileController->generatePath(
+    {{0_ft, 0_ft, 0_deg}, {3_ft, 0_ft, 0_deg}}, "thirdGoalBack");
+  profileController->setTarget("thirdGoalBack",true);
+  profileController->waitUntilSettled();
+  */
+
+  pros::delay(2000);
+
+  chassis->setMaxVelocity(300);
+
+  chassis->turnAngle(-190_deg);
+
+  chassis->setMaxVelocity(600);
+
+  frontIntakesOn();
+
+  profileController->generatePath(
+    {{0_ft, 0_ft, 0_deg}, {6_ft, 0_ft, 0_deg}}, "fourthGoalPickup");
+  profileController->setTarget("fourthGoalPickup");
+  profileController->waitUntilSettled();
+
+  allIntakesOff();
+
+  chassis->setMaxVelocity(300);
+
+  chassis->turnAngle(190_deg);
 
   chassis->setMaxVelocity(600);
 
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {5_ft, 0_ft, 0_deg}}, "thirdGoalScore");
-  profileController->setTarget("thirdGoalScore");
+    {{0_ft, 0_ft, 0_deg}, {2_ft, 1.8_ft, 45_deg}}, "fourthGoalScore");
+  profileController->setTarget("fourthGoalScore");
   profileController->waitUntilSettled();
 
-  scoreNoDescore(2000);
-
-  profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {2_ft, 0_ft, 0_deg}}, "thirdGoalBack");
-  profileController->setTarget("thirdGoalBack",true);
-  profileController->waitUntilSettled();
-
-
-
-
+  score();
 }
 
 void nothingToSeeHere(){
