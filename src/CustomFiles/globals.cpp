@@ -13,7 +13,7 @@ pros::Motor towerIntakeBottom(2, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_
 //Sensors
 
 pros::ADIAnalogIn topBallSensor('B');
-pros::Imu inertial(8);
+pros::Imu inertial(15);
 
 
 //Controller

@@ -5,9 +5,16 @@
 void setIntakeFront(int power){
   rightIntake = power;
   leftIntake = power;
-  towerIntakeBottom = power;
+  towerIntakeBottom = (power/3);
   towerIntakeTop = 0;
 
+}
+
+void setIntakeShoot(int power){
+  towerIntakeBottom = power;
+  towerIntakeTop = power;
+  rightIntake = 0;
+  leftIntake = 0;
 }
 
 void setIntakeALL(int power){
@@ -66,6 +73,9 @@ void setIntakeMotors(){
   else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       setIntakeALL(-127);
 }
+  else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
+      setIntakeShoot(127);
+  }
   else {
     setIntakeALL(0);
   }

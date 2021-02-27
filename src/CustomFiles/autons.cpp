@@ -15,9 +15,9 @@ void deploy(){
 }
 
 void frontIntakesOn(){
-  leftIntake = 127;
-  rightIntake = 127;
-  towerIntakeBottom = 127;
+  leftIntake = 120;
+  rightIntake = 120;
+  towerIntakeBottom = 90;
 }
 
 void sideIntakesOn(){
@@ -79,8 +79,8 @@ void scoreTwo(){
 void scoreNoDescore(int time){
   towerIntakeTop.move(127);
   towerIntakeBottom.move(127);;
-  leftIntake.move(-127);
-  rightIntake.move(-127);
+  leftIntake.move(-40);
+  rightIntake.move(-40);
   pros::delay(time);
   towerIntakeTop.move(0);
   towerIntakeBottom.move(0);
@@ -90,7 +90,7 @@ void scoreNoDescore(int time){
 
 void turnRight(int degree){
 
-  float kP = 0.001;
+  float kP = 0.3;
   float kD = 0.000;
   int startHeading = inertial.get_heading();
   float prevError = 0;
@@ -98,12 +98,12 @@ void turnRight(int degree){
   while(inertial.get_heading() < startHeading + degree){
     double currentHeading = inertial.get_heading();
     float error = (startHeading + degree) - currentHeading;
-    float integral = integral + error;
+    //float integral = integral + error;
     float derivative = error - prevError;
     prevError = error;
 
-    if(error == 0)
-      integral = 0;
+    //if(error == 0)
+    //  integral = 0;
 
     int power = error*kP + derivative*kD;
 
@@ -114,6 +114,12 @@ void turnRight(int degree){
 
     pros::delay(10);
   }
+
+  frontLeft = 0;
+  frontRight = 0;
+  backLeft = 0;
+  backRight = 0;
+
 }
 
 void turnLeft(int degree){
@@ -130,7 +136,7 @@ void turnLeft(int degree){
     float derivative = prevError - error;
     prevError = error;
 
-    int power = error*kP + derivative*kD;
+    float power = error*kP + derivative*kD;
 
     frontLeft = -power;
     frontRight = power;
@@ -139,8 +145,46 @@ void turnLeft(int degree){
 
     pros::delay(10);
   }
+
+  frontLeft = 0;
+  frontRight = 0;
+  backLeft = 0;
+  backRight = 0;
+
 }
 
+void turnYawRight(int degree){
+
+  float kP = 0.09;
+  float kD = 0.000;
+  frontRight.tare_position();
+  float prevError = 0;
+
+  while(frontRight.get_position() < degree){
+    float error = degree - frontRight.get_position();
+    //float integral = integral + error;
+    float derivative = error - prevError;
+    prevError = error;
+
+    //if(error == 0)
+    //  integral = 0;
+
+    int power = error*kP - derivative*kD;
+
+    frontLeft = power;
+    frontRight = -power;
+    backLeft = power;
+    backRight = -power;
+
+    pros::delay(10);
+  }
+
+  frontLeft = 0;
+  frontRight = 0;
+  backLeft = 0;
+  backRight = 0;
+
+}
 //Chassis Odometry & Motion Profiling Builders
   std::shared_ptr<OdomChassisController> chassis =
     ChassisControllerBuilder()
@@ -185,7 +229,7 @@ void twoPointAuton(){
   chassis->setMaxVelocity(600);
 
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {4.5_ft, 0_ft, 0_deg}}, "goal2Mid");
+    {{0_ft, 0_ft, 0_deg}, {5_ft, 0_ft, 0_deg}}, "goal2Mid");
   profileController->setTarget("goal2Mid");
   profileController->waitUntilSettled();
 
@@ -234,7 +278,7 @@ void homeRowAuton(){
   profileController->setTarget("goal2Score");
   profileController->waitUntilSettled();
 
-  score();
+  scoreNoDescore(1000);
 
   profileController->generatePath(
     {{0_ft, 0_ft, 0_deg}, {7.35_ft, 0_ft, 0_deg}}, "goal2Backup");
@@ -245,7 +289,7 @@ void homeRowAuton(){
 
   pros::delay(500);
 
-  chassis->turnAngle(-214_deg);
+  chassis->turnAngle(-222_deg);
 
   allIntakesOff();
 
@@ -256,7 +300,9 @@ void homeRowAuton(){
   profileController->setTarget("crossHomeZone");
   profileController->waitUntilSettled();
 
-  scoreTwo();
+  scoreNoDescore(2000);
+
+  frontIntakesSpit();
 
   profileController->generatePath(
     {{0_ft, 0_ft, 0_deg}, {3.5_ft, 0_ft, 0_deg}}, "goal3Backup");
@@ -265,32 +311,42 @@ void homeRowAuton(){
 
 }
 
-void skillsAuton(){
+void skillsFirstHalf(){
 
-/*  deploy();
+  deploy();
 
   chassis->setMaxVelocity(600);
 
   frontIntakesOn();
 
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {8.3_ft, 0_ft, 0_deg}}, "firstGoalGrab");
+    {{0_ft, 0_ft, 0_deg}, {8.4_ft, 0_ft, 0_deg}}, "firstGoalGrab");
   profileController->setTarget("firstGoalGrab");
   profileController->waitUntilSettled();
 
+  chassis->setMaxVelocity(200);
+
+  chassis->turnAngle(314_deg);
+
+  chassis->setMaxVelocity(600);
+
   allIntakesOff();
 
-  chassis->turnAngle(275_deg);
-
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {3.95_ft, 0_ft, 0_deg}}, "firstGoalScore");
+    {{0_ft, 0_ft, 0_deg}, {4.1_ft, 0_ft, 0_deg}}, "firstGoalScore");
   profileController->setTarget("firstGoalScore");
   profileController->waitUntilSettled();
 
-  scoreNoDescore(2000);
+  scoreNoDescore(700);
+
+  pros::delay(500);
+
+  scoreNoDescore(1000);
+
+  frontIntakesSpit();
 
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {0.8_ft, 0_ft, 0_deg}}, "firstGoalBackup");
+    {{0_ft, 0_ft, 0_deg}, {1_ft, 0_ft, 0_deg}}, "firstGoalBackup");
   profileController->setTarget("firstGoalBackup",true);
   profileController->waitUntilSettled();
 
@@ -298,130 +354,158 @@ void skillsAuton(){
 
   pros::delay(300);
 
-  chassis->turnAngle(-180_deg);
+  chassis->setMaxVelocity(200);
+
+  chassis->turnAngle(-232_deg);
+
+  chassis->setMaxVelocity(600);
 
   allIntakesOff();
 
   frontIntakesOn();
 
+  chassis->setMaxVelocity(400);
+
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {6.4_ft, 0_ft, 0_deg}}, "secondGoalDrive");
+    {{0_ft, 0_ft, 0_deg}, {10.4_ft, 0_ft, 0_deg}}, "secondGoalDrive");
   profileController->setTarget("secondGoalDrive");
   profileController->waitUntilSettled();
 
+  chassis->setMaxVelocity(200);
+
   allIntakesOff();
 
-  chassis->turnAngle(120_deg);
+  chassis->turnAngle(125_deg);
+
+  chassis->setMaxVelocity(600);
 
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {2_ft, 0_ft, 0_deg}}, "secondGoalScore");
+    {{0_ft, 0_ft, 0_deg}, {1.6_ft, 0_ft, 0_deg}}, "secondGoalScore");
   profileController->setTarget("secondGoalScore");
   profileController->waitUntilSettled();
 
   scoreNoDescore(1000);
 
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {2.6_ft, 0_ft, 0_deg}}, "secondGoalBack");
+    {{0_ft, 0_ft, 0_deg}, {2.8_ft, 0_ft, 0_deg}}, "secondGoalBack");
   profileController->setTarget("secondGoalBack",true);
   profileController->waitUntilSettled();
 
-  chassis->turnAngle(-110_deg);
+  chassis->setMaxVelocity(200);
+
+  chassis->turnAngle(-125_deg);
+
+  chassis->setMaxVelocity(600);
 
   profileController->generatePath(
     {{0_ft, 0_ft, 0_deg}, {2.9_ft, 0_ft, 0_deg}}, "thirdGoalCross");
   profileController->setTarget("thirdGoalCross",true);
   profileController->waitUntilSettled();
 
-  chassis->turnAngle(-180_deg);
+  chassis->setMaxVelocity(200);
+
+  chassis->turnAngle(-225_deg);
+
+  chassis->setMaxVelocity(600);
 
   frontIntakesOn();
 
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {3.8_ft, 0_ft, 0_deg}}, "thirdGoalAlign");
+    {{0_ft, 0_ft, 0_deg}, {2.9_ft, 0_ft, 0_deg}}, "thirdGoalAlign");
   profileController->setTarget("thirdGoalAlign",true);
   profileController->waitUntilSettled();
 
-  pros::delay(3000);
-
-  frontIntakesOn();
-
-  profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {8.4_ft, 0_ft, 0_deg}}, "thirdGoalGrab");
-  profileController->setTarget("thirdGoalGrab");
-  profileController->waitUntilSettled();
-
-  chassis->setMaxVelocity(400);
-
-  chassis->turnAngle(190_deg);
-
-  //chassis->turnAngle(90_deg);
-
-  chassis->setMaxVelocity(600);
-
   allIntakesOff();
+}
 
-  sideIntakesOn();
+void skillsSecondHalf(){
 
-  profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {4.4_ft, 0_ft, 0_deg}}, "thirdGoalScore");
-  profileController->setTarget("thirdGoalScore");
+    frontIntakesOn();
 
-  pros::delay(700);
+    profileController->generatePath(
+      {{0_ft, 0_ft, 0_deg}, {8.2_ft, 0_ft, 0_deg}}, "thirdGoalGrab");
+    profileController->setTarget("thirdGoalGrab");
+    profileController->waitUntilSettled();
 
-  frontIntakesOn();
+    pros::delay(200);
 
-  pros::delay(500);
+    allIntakesOff();
 
-  allIntakesOff();
+    chassis->setMaxVelocity(200);
 
-  profileController->waitUntilSettled();
+    chassis->turnAngle(223_deg);
 
+    //chassis->turnAngle(90_deg);
 
-  scoreNoDescore(2000);
+    chassis->setMaxVelocity(600);
 
-  allIntakesSpit();
+    allIntakesOff();
 
-  pros::delay(300);
+    frontIntakesOn();
 
-  scoreNoDescore(600);
+    profileController->generatePath(
+      {{0_ft, 0_ft, 0_deg}, {3.6_ft, 0_ft, 0_deg}}, "thirdGoalScore");
+    profileController->setTarget("thirdGoalScore");
 
-  profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {3_ft, 0_ft, 0_deg}}, "thirdGoalBack");
-  profileController->setTarget("thirdGoalBack",true);
-  profileController->waitUntilSettled();
-  */
+    pros::delay(700);
 
-  pros::delay(2000);
+    frontIntakesOn();
 
-  chassis->setMaxVelocity(300);
+    pros::delay(500);
 
-  chassis->turnAngle(-190_deg);
+    profileController->waitUntilSettled();
 
-  chassis->setMaxVelocity(600);
+    allIntakesOff();
 
-  frontIntakesOn();
+    scoreNoDescore(2000);
 
-  profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {6_ft, 0_ft, 0_deg}}, "fourthGoalPickup");
-  profileController->setTarget("fourthGoalPickup");
-  profileController->waitUntilSettled();
+    profileController->generatePath(
+      {{0_ft, 0_ft, 0_deg}, {2.7_ft, 0_ft, 0_deg}}, "thirdGoalBack");
+    profileController->setTarget("thirdGoalBack",true);
+    profileController->waitUntilSettled();
 
-  allIntakesOff();
+    pros::delay(2500);
 
-  chassis->setMaxVelocity(300);
+    chassis->setMaxVelocity(200);
 
-  chassis->turnAngle(190_deg);
+    chassis->turnAngle(-223_deg);
 
-  chassis->setMaxVelocity(600);
+    chassis->setMaxVelocity(600);
 
-  profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {2_ft, 1.8_ft, 45_deg}}, "fourthGoalScore");
-  profileController->setTarget("fourthGoalScore");
-  profileController->waitUntilSettled();
+    frontIntakesOn();
 
-  score();
+    profileController->generatePath(
+      {{0_ft, 0_ft, 0_deg}, {6_ft, 0_ft, 0_deg}}, "fourthGoalPickup");
+    profileController->setTarget("fourthGoalPickup");
+    profileController->waitUntilSettled();
+
+    allIntakesOff();
+
+    chassis->setMaxVelocity(300);
+
+    chassis->turnAngle(120_deg);
+
+    chassis->setMaxVelocity(600);
+
+    profileController->generatePath(
+      {{0_ft, 0_ft, 0_deg}, {4_ft, 0_ft, 0_deg}}, "fourthGoalScore");
+    profileController->setTarget("fourthGoalScore");
+    profileController->waitUntilSettled();
+
+    score();
+}
+
+void skillsAuton(){
+
+  skillsFirstHalf();
+  skillsSecondHalf();
 }
 
 void nothingToSeeHere(){
 
+}
+
+void testerAuton(){
+
+  turnYawRight(400);
 }

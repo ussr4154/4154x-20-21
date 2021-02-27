@@ -2,6 +2,8 @@
 //Helpers
 void setIntakeFront(int power);
 
+void setIntakeShoot(int power);
+
 void setIntakeALL(int power);
 
 void setIntakeEjector(int power);
