@@ -5,7 +5,7 @@
 void setIntakeFront(int power){
   rightIntake = power;
   leftIntake = power;
-  towerIntakeBottom = (power/3);
+  towerIntakeBottom = (power/2);
   towerIntakeTop = 0;
 
 }

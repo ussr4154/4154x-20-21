@@ -281,7 +281,7 @@ void homeRowAuton(){
   scoreNoDescore(1000);
 
   profileController->generatePath(
-    {{0_ft, 0_ft, 0_deg}, {7.35_ft, 0_ft, 0_deg}}, "goal2Backup");
+    {{0_ft, 0_ft, 0_deg}, {7.6_ft, 0_ft, 0_deg}}, "goal2Backup");
   profileController->setTarget("goal2Backup",true);
   profileController->waitUntilSettled();
 
@@ -483,7 +483,7 @@ void skillsSecondHalf(){
 
     chassis->setMaxVelocity(300);
 
-    chassis->turnAngle(120_deg);
+    chassis->turnAngle(127_deg);
 
     chassis->setMaxVelocity(600);
 
@@ -493,6 +493,11 @@ void skillsSecondHalf(){
     profileController->waitUntilSettled();
 
     score();
+
+    profileController->generatePath(
+      {{0_ft, 0_ft, 0_deg}, {4_ft, 0_ft, 0_deg}}, "fourthGoalBack");
+    profileController->setTarget("fourthGoalBack", true);
+    profileController->waitUntilSettled();
 }
 
 void skillsAuton(){
@@ -502,7 +507,7 @@ void skillsAuton(){
 }
 
 void nothingToSeeHere(){
-
+  deploy();
 }
 
 void testerAuton(){
