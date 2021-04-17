@@ -53,7 +53,7 @@ bool ballPresent(){
 
     bool ball = false;
     if(topBallSensor.get_value() <= lineSensorThreshold){
-      bool ball = true;
+      ball = true;
     }
     return ball;
 }
@@ -75,6 +75,9 @@ void setIntakeMotors(){
 }
   else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
       setIntakeShoot(127);
+  }
+  else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
+  deploy();
   }
   else {
     setIntakeALL(0);
