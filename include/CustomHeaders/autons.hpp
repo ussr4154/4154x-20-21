@@ -9,6 +9,9 @@ void twoPointAuton();
 void skillsAuton();
 void nothingToSeeHere();
 void testerAuton();
+void frontIntakesSpit();
+void allIntakesOff();
+void towerIntakeEjector(int power);
 
 //Macros
 void deploy();

@@ -32,6 +32,11 @@ void setIntakeEjector(int power){
   towerIntakeTop = - power;
 }
 
+void towerIntakeEjector(int power){
+  towerIntakeBottom = power;
+  towerIntakeTop = - power;
+}
+
 void setIntakeIndex(int power){
 
   if(ballPresent()){
@@ -77,7 +82,9 @@ void setIntakeMotors(){
       setIntakeShoot(127);
   }
   else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
+  frontIntakesSpit();
   deploy();
+  pros::delay(300);
   }
   else {
     setIntakeALL(0);
